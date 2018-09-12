@@ -1,28 +1,31 @@
 package com.sample;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
+/**
+ * 与えられた文字列の順列を生成する
+ */
 public class Main {
 
     public static void main(String[] args) {
-        for (String ans : perm("ABCD")) {
-            System.out.println(ans);
-        }
+        String inputStr = "ABCDEF";
+        List<String> in = Arrays.asList(inputStr.split(""));
+        perm(in).forEach(System.out::println);
     }
 
-    public static List<String> perm(String in) {
-        List<String> ret = new ArrayList<>();
-        if (in.length() == 1) {
-            ret.add(in);
-            return ret;
+    public static Stream<String> perm(List<String> in) {
+        if (in.size() == 1) {
+            return in.stream();
         }
 
-        for (int i = 0; i < in.length(); i++) {
-            for (String out : perm(in.substring(0, i) + in.substring(i + 1))) {
-                ret.add(in.substring(i,i + 1) + out);
-            }
-        }
-        return ret;
+        return in.stream()
+                .flatMap(s -> {
+                    List<String> tmp = new ArrayList<>(in);
+                    tmp.remove(s);
+                    return perm(tmp).map(r -> s + r);
+                });
     }
 }
