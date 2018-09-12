@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * 与えられた文字列の順列を生成する
+ */
 public class Main {
 
     public static void main(String[] args) {
